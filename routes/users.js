@@ -1,23 +1,18 @@
 const path  = require('path');
-const mysql = require(path.join(__dirname, '..', 'config', 'mysql'));
-//const mysql = require(path.normalize('..config/mysql'));
-const db    = mysql.connect();
+const User  = require(path.join(__dirname, '..', 'services', 'users'));
 
 module.exports = function(app) {
     // endpoint
     app.get('/users', function(request, response, next){
-        // vi skal lave et databaseopkald som henter
-        // alle brugere i databsen, returnerer et JSON,
-        // som vi så kan præsentere via res.send()
-        // exexute er et prepared statement
-        db.execute('SELECT user_id, username FROM users', function(error, rows, fields){
-            if (error) {
+        let user = new User();
+        user.getAll(function(error, result) {
+            if(error) {
                 console.error(error.message);
                 response.send(404);
                 return;
             }
-            response.send(200, rows);
-        });
+            response.send(result);
+        })
     });
 
     app.post('/users', function(request, response, next){
