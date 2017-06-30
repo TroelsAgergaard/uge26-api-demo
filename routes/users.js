@@ -1,21 +1,7 @@
 module.exports = function(app) {
     // endpoint
     app.get('/users', function(request, response, next){
-        response.send([
-            {
-                "name": {
-                    "username": "agergaard",
-                    "givenname": "Troels",
-                    "sirname": "Agergaard"
-                }
-            },{
-                "name": {
-                    "username": "vm",
-                    "givenname": "Viggo",
-                    "sirname": "Mortensen"
-                }
-            }
-        ]); 
+        response.send(); 
     });
 
     app.post('/users', function(request, response, next){
